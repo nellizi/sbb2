@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.swing.*;
 import java.security.PublicKey;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Controller
 public class MainController {
@@ -60,4 +62,20 @@ public class MainController {
         return i;
     }
 
+    @GetMapping("/gugudan")
+    @ResponseBody
+    public String showGugudan(Integer dan, Integer limit){
+        if(dan == null){
+            dan =  9;
+        }
+        if(limit == null){
+            limit =  9;
+        }
+        Integer finalDan = dan;
+        return IntStream.rangeClosed(1,limit)
+                .mapToObj(i ->  "%d * %d = %d".formatted(finalDan, i,finalDan*i))
+                .collect(Collectors.joining("<br>"));
+
+
+    }
 }
