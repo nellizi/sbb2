@@ -1,6 +1,7 @@
 package com.ll.exam.sbb2;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +12,8 @@ import javax.servlet.http.HttpSession;
 import javax.swing.*;
 import java.security.PublicKey;
 import java.sql.SQLOutput;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -120,13 +123,60 @@ public class MainController {
         session.setAttribute("age", age);
         return age;
     }
+
     @RequestMapping(value = "/getSessionAge")
     @ResponseBody
-    public String ageSession2(HttpServletRequest request) throws Exception{
+    public String ageSession2(HttpServletRequest request) throws Exception {
         HttpSession session = request.getSession();
-        String age = (String)session.getAttribute("age");
+        String age = (String) session.getAttribute("age");
         return "세션에 저장된 값 = " + age;
     }
 
+    private List<Article> articles = new ArrayList<>();
 
+    @GetMapping("/addArticle")
+    @ResponseBody
+    public String addArticle(String title, String body) {
+        Article article = new Article(title,body);  //두개만 있는 생성자 사용
+
+        return "%d번 게시물이 생성되었습니다.".formatted(article.getId());
+    }
+//    @GetMapping("/article/{id}")
+//    @ResponseBody
+//    public Article getArticle(@PathVariable int id) {
+//        Article article = articles
+//                .stream()
+//                .filter(a -> a.getId()==id)
+//                .findFirst()
+//                .get();
+//
+//        return article;
+//    }
+
+
+    @GetMapping("/article/{id}")
+    @ResponseBody
+    public Article getArticle(@PathVariable int id) {
+        Article article = articles
+                .stream()
+                .filter(a -> a.getId() == id) // 1번
+                .findFirst()
+                .get();
+
+        return article;
+    }
+
+
+}
+    @AllArgsConstructor
+    @Getter
+    class Article {
+        private static int lastId = 0;
+
+        private final int id;
+        private final String title;
+        private final String body;
+        public Article(String title, String body) {  // title, body만 있는 생성자
+            this(++lastId, title, body);
+        }
 }
