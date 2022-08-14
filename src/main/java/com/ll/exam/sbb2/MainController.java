@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.swing.*;
 import java.security.PublicKey;
+import java.sql.SQLOutput;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -76,6 +77,28 @@ public class MainController {
                 .mapToObj(i ->  "%d * %d = %d".formatted(finalDan, i,finalDan*i))
                 .collect(Collectors.joining("<br>"));
 
-
     }
+    @GetMapping("/mbti/{name}")
+    @ResponseBody
+    public String showMbti(@PathVariable String name){
+        System.out.println("실행중?");
+        String mbti = switch (name){
+            case "홍길동" -> "INFP";
+            case "홍길순" -> "ENTJ";
+            case "임꺽정" -> "ISTJ";
+            case "이지현" -> "ENFP";
+            default -> "CUTE";
+        };
+        return mbti;
+    }
+//     return switch(name){
+//        case "홍길동" -> "INFP";
+//        case "홍길순" -> "ENTJ";
+//        case "임꺽정" -> "ISTJ";
+//        case "이지현" -> "ENFP";
+//        default -> "CUTE";
+//    };    이렇게 한 번에 리턴으로 보내기도 가능
+    }
+
+
 }
