@@ -6,9 +6,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.swing.*;
+import java.security.PublicKey;
 
 @Controller
 public class MainController {
+    int i = -1;
     @RequestMapping("/sbb")
     @ResponseBody
     public String index(){
@@ -40,4 +42,22 @@ public class MainController {
                 <h1>안녕하세요, POST방식으로 오셨군요.</h1>
                 """.formatted(age);
     }
+
+    @GetMapping("/plus")
+    @ResponseBody
+    public String plus(int a, int b){
+        return a + b +"";
+    }
+    @GetMapping("/minus")
+    @ResponseBody
+    public String minus(int a, int b){
+        return a - b +"";
+    }
+    @GetMapping("/increase")
+    @ResponseBody
+    public int increase(){
+        i++;
+        return i;
+    }
+
 }
