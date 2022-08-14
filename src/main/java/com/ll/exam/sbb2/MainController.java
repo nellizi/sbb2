@@ -84,7 +84,10 @@ public class MainController {
         System.out.println("실행중?");
         String mbti = switch (name){
             case "홍길동" -> "INFP";
-            case "홍길순" -> "ENTJ";
+            case "홍길순" -> {
+                char j = 'j';
+                yield "INF" + j;
+            }
             case "임꺽정" -> "ISTJ";
             case "이지현" -> "ENFP";
             default -> "CUTE";
