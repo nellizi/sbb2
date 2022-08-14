@@ -112,9 +112,9 @@ public class MainController {
 //    };    이렇게 한 번에 리턴으로 보내기도 가능
 
 
-    @RequestMapping(value = "/savaSessionAge")
+    @RequestMapping(value = "/saveSessionAge")
     @ResponseBody
-    public String ageSession(HttpServletRequest request) throws Exception {
+    public String ageSession(HttpServletRequest request) throws Exception {   //PathVariable을 안 했는데도 가능. 괜츈?
         HttpSession session = request.getSession();
         String age = "10";
         session.setAttribute("age", age);
