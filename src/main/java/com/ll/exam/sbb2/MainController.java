@@ -3,6 +3,7 @@ package com.ll.exam.sbb2;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -166,16 +167,50 @@ public class MainController {
         return article;
     }
 
+    @GetMapping("/modifyArticle/{id}/{title}/{body}")
+    @ResponseBody
+    public String modifyArticle(@PathVariable int id ,@PathVariable String title ,@PathVariable String body  ) {
+        Article article = articles
+                .stream()
+                .filter(a -> a.getId() == id) // 1번
+                .findFirst()
+                .get();
+        if(article == null){
+            return "%d번 게시글은 존재하지 않습니다.".formatted(id);
+        }
+
+        article.setTitle(title);
+        article.setBody(body);
+
+
+        return "%d번 게시글이 수정되었습니다.".formatted(id);
+    }
+    @GetMapping("/delete/{id}")
+    @ResponseBody
+    public String deleteArticle(@PathVariable int id ) {
+        Article article = articles
+                .stream()
+                .filter(a -> a.getId() == id) // 1번
+                .findFirst()
+                .get();
+    articles.remove(article);
+
+
+        return "%d번 게시글이 삭제되었습니다.".formatted(id);
+    }
+
+
 
 }
     @AllArgsConstructor
     @Getter
+    @Setter
     class Article {
         private static int lastId = 0;
 
-        private final int id;
-        private final String title;
-        private final String body;
+        private  int id;
+        private  String title;
+        private  String body;
         public Article(String title, String body) {  // title, body만 있는 생성자
             this(++lastId, title, body);
         }
