@@ -5,6 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 class    Sbb2ApplicationTests {
@@ -31,6 +35,18 @@ class    Sbb2ApplicationTests {
 		q2.setCreateDate(LocalDateTime.now());
 		questionRepository.save(q2);
 
+		assertThat(q1.getId()).isGreaterThan(0);
+		assertThat(q2.getId()).isGreaterThan(q1.getId());
+
+
+	}
+	@Test
+	void testJpa2(){
+		List<Question> all = questionRepository.findAll();
+		assertEquals(2,all.size());
+
+		Question question = all.get(0);
+		assertEquals("what is sbb",question.getSubject());
 	}
 
 }
