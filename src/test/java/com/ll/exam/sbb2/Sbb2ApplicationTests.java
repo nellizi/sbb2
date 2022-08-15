@@ -25,6 +25,11 @@ class Sbb2ApplicationTests {
     }
 
     @Test
+    void testJpa(){
+        questionRepository.truncate();
+    }
+
+    @Test
     void jpaTest1() {
         Question q1 = new Question();
         q1.setSubject("what is sbb");
