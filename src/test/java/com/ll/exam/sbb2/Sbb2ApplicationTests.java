@@ -1,5 +1,7 @@
 package com.ll.exam.sbb2;
 
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,6 +26,18 @@ class Sbb2ApplicationTests {
     void contextLoads() {
     }
 
+
+
+
+    @BeforeEach
+    void beforeEach(){
+        questionRepository.disableForeignKeyChecks();
+        questionRepository.truncate();
+        questionRepository.enableForeignKeyChecks();
+
+        jpaTest1();
+    }
+
     @Test
     void jpaTest1() {
         Question q1 = new Question();
@@ -37,10 +51,6 @@ class Sbb2ApplicationTests {
         q2.setContent("does id create automatically?");
         q2.setCreateDate(LocalDateTime.now());
         questionRepository.save(q2);
-
-        questionRepository.disableForeignKeyChecks();
-        questionRepository.truncate();
-        questionRepository.enableForeignKeyChecks();
 
     }
 
