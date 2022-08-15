@@ -25,11 +25,6 @@ class Sbb2ApplicationTests {
     }
 
     @Test
-    void testJpa(){
-        questionRepository.truncate();
-    }
-
-    @Test
     void jpaTest1() {
         Question q1 = new Question();
         q1.setSubject("what is sbb");
@@ -43,9 +38,9 @@ class Sbb2ApplicationTests {
         q2.setCreateDate(LocalDateTime.now());
         questionRepository.save(q2);
 
-        assertThat(q1.getId()).isGreaterThan(0);
-        assertThat(q2.getId()).isGreaterThan(q1.getId());
-
+        questionRepository.disableForeignKeyChecks();
+        questionRepository.truncate();
+        questionRepository.enableForeignKeyChecks();
 
     }
 
