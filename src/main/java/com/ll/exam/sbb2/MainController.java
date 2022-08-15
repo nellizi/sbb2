@@ -214,4 +214,19 @@ public class MainController {
         public Article(String title, String body) {  // title, body만 있는 생성자
             this(++lastId, title, body);
         }
+
+        @GetMapping("addPerson")
+        @ResponseBody
+        public Person addPerson(Person p){
+            return p;
+        }
 }
+
+@Getter
+@AllArgsConstructor
+ class Person{
+    private int id;
+    private int age;
+    private String name;
+
+ }
