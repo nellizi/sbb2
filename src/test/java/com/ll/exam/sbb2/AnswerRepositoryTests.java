@@ -1,10 +1,13 @@
 package com.ll.exam.sbb2;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 public class AnswerRepositoryTests {
@@ -23,13 +26,25 @@ public class AnswerRepositoryTests {
     private void clearData() {
         QuestionRepositoryTests.clearData(questionRepository);
 
-        questionRepository.disableForeignKeyChecks();
-        answerRepository.truncate();
-        questionRepository.enableForeignKeyChecks();
+        answerRepository.truncateTable();
     }
 
     private void createSampleData() {
         QuestionRepositoryTests.createSampleData(questionRepository);
+
+        Question q = questionRepository.findById(1);
+
+        Answer a1 = new Answer();
+        a1.setContent("sbb는 질문답변 게시판 입니다.");
+        a1.setQuestion(q);
+        a1.setCreateDate(LocalDateTime.now());
+        answerRepository.save(a1);
+
+        Answer a2 = new Answer();
+        a2.setContent("sbb에서는 주로 스프링부트관련 내용을 다룹니다.");
+        a2.setQuestion(q);
+        a2.setCreateDate(LocalDateTime.now());
+        answerRepository.save(a2);
     }
 
     @Test
@@ -41,5 +56,11 @@ public class AnswerRepositoryTests {
         a.setQuestion(q);
         a.setCreateDate(LocalDateTime.now());
         answerRepository.save(a);
+    }
+
+    @Test
+    void 조회() {
+        Answer a = this.answerRepository.findById(1).get();
+        assertThat(a.getContent()).isEqualTo("sbb는 질문답변 게시판 입니다.");
     }
 }
