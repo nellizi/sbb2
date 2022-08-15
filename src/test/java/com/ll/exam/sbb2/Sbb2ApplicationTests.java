@@ -87,5 +87,11 @@ class Sbb2ApplicationTests {
 //        questionRepository.save(question);
 
     }
+    @Test
+    void testJpa7() {
+        Question q = questionRepository.findById(1);
+        questionRepository.delete(q);
+    }
+
 
 }
