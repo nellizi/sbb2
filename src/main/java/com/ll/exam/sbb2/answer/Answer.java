@@ -1,6 +1,6 @@
-package com.ll.exam.sbb2;
+package com.ll.exam.sbb2.answer;
 
-
+import com.ll.exam.sbb2.question.Question;
 import lombok.Getter;
 import lombok.Setter;
 
